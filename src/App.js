@@ -4,44 +4,60 @@ import "./App.css";
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [friendList, setFriendList] = useState(friends);
+  const [selectedFriend, setSelectedFriend] = useState(null);
   function toggleShowAddFriend() {
-    setShowAddFriend((showAddFriend) => (!showAddFriend));
+    setShowAddFriend((showAddFriend) => !showAddFriend);
   }
 
   function handleAddNewFriend(newfriend) {
     setFriendList((friendList) => [...friendList, newfriend]);
-    toggleShowAddFriend()
+    toggleShowAddFriend();
+  }
+
+  function handleSelectFriend(friend) {
+    setSelectedFriend(friend.id === selectedFriend?.id ? null : friend);
   }
 
   return (
     <div className="app">
-      <div className="sidebar">
-        <FriendList friends={friendList} />
+      <div className="sidebar friend-list">
+        <FriendList
+          friends={friendList}
+          onSelectFriend={handleSelectFriend}
+          selectedFriend={selectedFriend}
+        />
         {showAddFriend && <NewFriendForm onAddFriend={handleAddNewFriend} />}
         <Button
           children={showAddFriend ? "Close" : "Add Friend"}
           onClick={toggleShowAddFriend}
         />
       </div>
+      {selectedFriend && <SplitForm />}
     </div>
   );
 }
 
-function FriendList({ friends }) {
+function FriendList({ friends, onSelectFriend, selectedFriend }) {
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+        <Friend
+          friend={friend}
+          key={friend.id}
+          onSelectFriend={onSelectFriend}
+          selectedFriend={selectedFriend}
+        />
       ))}
     </ul>
   );
 }
 
-function Friend({ friend }) {
+function Friend({ friend, onSelectFriend, selectedFriend }) {
   const { name, balance, avatarUrl } = friend;
+  const isSelected = friend.id === selectedFriend?.id;
   return (
     <li className="friend">
-      <img src={avatarUrl} alt="avatar" />
+    <img src={avatarUrl} alt="avatar" />
       <h3>{name}</h3>
       {balance < 0 && (
         <p className="red">
@@ -54,32 +70,36 @@ function Friend({ friend }) {
         </p>
       )}
       {balance === 0 && <p className="black">You and {name} are even</p>}
+      <Button
+        children={isSelected ? "Close" : "Select"}
+        onClick={(friend) => onSelectFriend(friend)}
+      />
     </li>
   );
 }
 
-function NewFriendForm({onAddFriend}) {
-  const [name, setName] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
+function NewFriendForm({ onAddFriend }) {
+  const [name, setName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     const newFriend = {
       name: name,
       imageUrl: imageUrl,
-      id: crypto.randomUUID()
-    }
-    onAddFriend(newFriend)
-    setName('')
-    setImageUrl('')
+      id: crypto.randomUUID(),
+    };
+    onAddFriend(newFriend);
+    setName("");
+    setImageUrl("");
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>Friend name</label>
-      <input type="text" onChange={(e) => setName(e.target.value)}/>
+      <input type="text" onChange={(e) => setName(e.target.value)} />
 
       <label>Image Url</label>
-      <input type="text" onChange={(e) => setImageUrl(e.target.value)}/>
+      <input type="text" onChange={(e) => setImageUrl(e.target.value)} />
 
       <button type="submit">Add</button>
     </form>
@@ -89,8 +109,8 @@ function NewFriendForm({onAddFriend}) {
 function SplitForm(props) {
   return (
     <div>
-      <h1>Split a bill with</h1>
       <form>
+        <h1>Split a bill with</h1>
         <label>Bill value</label>
         <input type="text" />
 
@@ -101,10 +121,17 @@ function SplitForm(props) {
         <input type="text" />
 
         <label>Who is paying the bill</label>
-        <select></select>
+        <select>
+          <option value="you" key="you">
+            You
+          </option>
+          <option value="andy" key="andy">
+            Andy
+          </option>
+        </select>
       </form>
     </div>
-  )
+  );
 }
 
 function Button({ children, onClick }) {
