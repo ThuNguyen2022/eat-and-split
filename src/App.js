@@ -32,6 +32,7 @@ function App() {
           onClick={toggleShowAddFriend}
         />
       </div>
+      <SplitForm />
       {selectedFriend && <SplitForm />}
     </div>
   );
@@ -94,13 +95,15 @@ function NewFriendForm({ onAddFriend }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Friend name</label>
-      <input type="text" onChange={(e) => setName(e.target.value)} />
-
-      <label>Image Url</label>
-      <input type="text" onChange={(e) => setImageUrl(e.target.value)} />
-
+    <form onSubmit={handleSubmit} className="form-add-friend">
+      <div>
+        <label>🤡 Friend name</label>
+        <input type="text" onChange={(e) => setName(e.target.value)} />
+      </div>
+      <div>
+        <label>🏀 Image Url</label>
+        <input type="text" onChange={(e) => setImageUrl(e.target.value)} />
+      </div>
       <button type="submit">Add</button>
     </form>
   );
@@ -108,27 +111,38 @@ function NewFriendForm({ onAddFriend }) {
 
 function SplitForm(props) {
   return (
-    <div>
+    <div className="split-form">
       <form>
         <h1>Split a bill with</h1>
-        <label>Bill value</label>
-        <input type="text" />
+        <div>
+          <label>🦆 Bill value</label>
+          <input type="text" />
+        </div>
 
-        <label>Your expense</label>
-        <input type="text" />
+        <div>
+          <label>🦁 Your expense</label>
+          <input type="text" />
+        </div>
 
-        <label>Clark's expense</label>
-        <input type="text" />
+        <div>
+          <label>🦄 Clark's expense</label>
+          <input type="text" />
+        </div>
 
-        <label>Who is paying the bill</label>
-        <select>
-          <option value="you" key="you">
-            You
-          </option>
-          <option value="andy" key="andy">
-            Andy
-          </option>
-        </select>
+        <div>
+          <label>🦋 Who is paying the bill</label>
+          <select>
+            <option value="you" key="you">
+              You
+            </option>
+            <option value="andy" key="andy">
+              Andy
+            </option>
+          </select>
+        </div>
+        <Button
+          children={"Split bill"}
+        />
       </form>
     </div>
   );

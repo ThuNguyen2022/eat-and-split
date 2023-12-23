@@ -76,6 +76,13 @@ button:hover {
   color: var(--color-red);
 }
 
+.app {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+}
+
 .friend-list {
   width: 40%;
 }
@@ -127,4 +134,71 @@ button:hover {
   grid-row: span 2;
   grid-column: 3;
   font-size: 16px;
+}
+
+form {
+  background-color: var(--color-lightest);
+}
+
+.form-add-friend {
+  padding: 20px 20px 50px 20px;
+  margin: 20px 20px 10px 20px;
+  border-radius: 10px;
+}
+
+.form-add-friend div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-add-friend label {
+  margin-right: 10px;
+}
+
+.form-add-friend input {
+  padding: 7px 12px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+  width: 60%;
+}
+
+.form-add-friend button {
+  float: right;
+  width: 30%;
+  margin-top: 5px;
+}
+
+.split-form {
+  padding: 20px;
+  width: 60%;
+}
+
+.split-form form {
+  padding: 20px;
+  border-radius: 10px;
+  padding-bottom: 50px;
+}
+
+.split-form h1 {
+  margin-bottom: 20px;
+}
+
+.split-form div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.split-form input, select {
+  padding: 7px 12px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+  width: 60%;
+}
+
+.split-form button {
+  float: right;
+  width: 30%;
+  margin-top: 5px;
 }
