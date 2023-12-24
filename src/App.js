@@ -24,6 +24,7 @@ function App() {
     const newFriendList = [...friendList];
     newFriendList[friendIndex].balance += friendExpense;
     setFriendList(newFriendList);
+    setSelectedFriend(null);
   }
 
   return (
